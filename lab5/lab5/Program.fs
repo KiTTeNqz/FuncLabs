@@ -344,8 +344,8 @@ let main argv =
     0
     *)
 
-(*18.3
-
+//18.3
+(*
 let sumCifr n = 
   let rec sumCifr1 n cond currSum = 
       if n = 0 then currSum
@@ -391,11 +391,13 @@ let obhod3 n =
   obhod3_In n (fun x y-> if x>y then true else false) Int32.MinValue 0
 
 let proizved x y = x*y
+
+let otv n = proizved (obhod3 n) ((obhod3>>sumCifr) n)
+
 [<EntryPoint>]
 let main argv = 
-  let n=15
-  let solve=obhod3>>sumCifr
-  proizved (obhod3 n) (solve n)|>printfn "%i"
-  Console.ReadKey()
-  0 // возвращение целочисленного кода выхода
-  *)
+    let n=15
+    otv n|>printfn "%i"
+    Console.ReadKey()
+    0 // возвращение целочисленного кода выхода
+ *)
