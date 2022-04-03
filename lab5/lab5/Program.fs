@@ -321,3 +321,25 @@ obhodVzaimProst num |> printfn "%i"
        findCiph n|>printfn "%i"
        0
        *)
+
+(* 19.2
+
+let isNotDiv3 n= if(n%3<>0) then true else false
+let f7 n = 
+    let rec f9 n f init predicate = 
+        if n = 0 then init
+        else
+            let cifr = n % 10
+            let n1 = n / 10
+            let acc = f init cifr
+            if predicate cifr then f9 n1 f acc predicate
+            else f9 n1 f init predicate
+    f9 n (fun x y -> if x > y then x else y) -1 isNotDiv3
+
+[<EntryPoint>]
+let main argv =
+    Console.WriteLine("Enter a number: ")
+    let n = Convert.ToInt32(Console.ReadLine())
+    f7 n|>printfn "%i"
+    0
+    *)
