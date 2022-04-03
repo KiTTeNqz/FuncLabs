@@ -57,3 +57,45 @@ let main argv =
     writeList resultListSum
 
     *)
+(*Задание 9. Дан целочисленный массив. Вернуть элементы перед последним минимальным
+
+let listMin list = 
+    match list with 
+    |[] -> 0
+    |h::t -> accCond list (fun x y -> if x < y then x else y) (fun x -> true) h
+
+let indexOfLastMin list =
+    let rec index_of_last_Min list tail indCurr indLast =
+        match tail with
+        |[]->indLast
+        |h::t-> 
+            let newIndCurr=indCurr+1
+            if(listMin list = h) then index_of_last_Min list t newIndCurr newIndCurr
+            else index_of_last_Min list t newIndCurr indLast
+    index_of_last_Min list list -1 -1
+
+
+let filtIndex list = 
+    let rec filter1 list pr newList currInd = 
+        match list with
+        | [] -> newList
+        | h::t ->
+                let newCurrInd = currInd+1
+                let newnewList = newList @ [h]
+                if pr currInd then filter1 t pr newnewList newCurrInd
+                else filter1 t pr newList newCurrInd
+    filter1 list (fun x-> x<(indexOfLastMin list)-1) [] -1
+                                      
+[<EntryPoint>]
+let main argv =
+    Console.WriteLine("Введите количество эелемнтов списка ")
+    let list = Convert.ToInt32(Console.ReadLine()) |> readList
+    Console.WriteLine("Последний минимальный: ")
+    printfn "%i" (listMin list)
+    Console.WriteLine("Последний минимальный индекс: ")
+    printfn "%i" (indexOfLastMin list)
+    Console.WriteLine("Список до последнего минимального: ")
+    filtIndex list|>writeList|>ignore
+    0
+
+*)
