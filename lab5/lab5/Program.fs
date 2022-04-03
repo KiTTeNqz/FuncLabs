@@ -264,3 +264,39 @@ let main argv =
  0
 
 *)
+
+(* 19.1
+let rec nod a b =
+if(a>0 && b>0)
+then 
+    if(a>b)
+    then nod (a%b) b
+    else nod a (b%a)
+else if(a=0)
+    then b else a
+    
+let max x y =
+if x>y then x else y
+    
+let isDiv2 x = if(x%2=0) then true else false
+let condToCase x y = if (not((nod x y) = 1) && isDiv2 y) then true else false
+
+let obhodVzaimProst num = 
+let rec obhodVzaimProstPodKapotom basicNum kolvoForKapot currentNum =
+    let resNum = currentNum-1
+    if currentNum = 0 then kolvoForKapot
+    elif condToCase basicNum currentNum
+    then 
+        let newKolvo = kolvoForKapot+1
+        obhodVzaimProstPodKapotom basicNum newKolvo resNum
+    else obhodVzaimProstPodKapotom basicNum kolvoForKapot resNum
+obhodVzaimProstPodKapotom num 0 num
+
+[<EntryPoint>]
+let main argv =
+let num = 10
+obhodVzaimProst num |> printfn "%i"
+let num = 11
+obhodVzaimProst num |> printfn "%i"
+0
+*)
