@@ -156,3 +156,41 @@ let main argv =
     solve list|>writeList|>ignore
     0
     *)
+
+(*//22. Количество минимальных в промежутке a b
+
+let listMin list = 
+    match list with 
+    |[] -> 0
+    |h::t -> accCond list (fun x y -> if x < y then x else y) (fun x -> true) h
+
+let buildListCond list a b =
+    let rec buildRev currInd list between newList a b =
+        match list with
+        |[]->newList
+        |h::t-> 
+            let newInd=currInd+1
+            let newnewList=newList@[h]
+            if (between newInd a b) then buildRev newInd t between newnewList a b 
+            else buildRev newInd t between newList a b
+    buildRev -1 list (fun x y z-> x>y && x<z) [] a b 
+
+let solve22 list a b =
+    condCount (buildListCond list a b) (fun x -> x = (listMin list)) 0
+
+[<EntryPoint>]
+let main argv =
+    Console.WriteLine("Введите количество эелемнтов списка ")
+    let list = Convert.ToInt32(Console.ReadLine()) |> readList
+    Console.WriteLine("Минимальный: ")
+    printfn "%i" (listMin list)
+    Console.WriteLine("Введите интервал a b: ")
+    let a = Convert.ToInt32(Console.ReadLine())
+    let b = Convert.ToInt32(Console.ReadLine())
+    Console.WriteLine("Подсписок: ")
+    buildListCond list a b|>writeList|>ignore
+    Console.WriteLine("Количество минимальных между ними: ")
+    solve22 list a b|>printfn "%i"
+    0
+    *)
+
