@@ -99,3 +99,60 @@ let main argv =
     0
 
 *)
+
+(*//12. Вернуть список, заключенный между минимальным и максимальным элементами инвертировать
+
+let listMin list = 
+    match list with 
+    |[] -> 0
+    |h::t -> accCond list (fun x y -> if x < y then x else y) (fun x -> true) h
+
+let listMax list = 
+    match list with 
+    |[] -> 0
+    |h::t -> accCond list (fun x y -> if x > y then x else y) (fun x -> true) h
+(*
+*)
+let pos list el = 
+    let rec pos1 list el num = 
+        match list with
+            |[] -> 0
+            |h::t ->    if (h = el) then num
+                        else 
+                            let num1 = num + 1
+                            pos1 t el num1
+    pos1 list el 0
+
+let indexMin list = pos list (listMin list)
+let indexMax list = pos list (listMax list)
+let solve list =
+    let rec solve1 list cond cond2 currInd newList1 newList2 newList3 minInd maxInd =
+        match list with
+        |[]->newList1@newList2@newList3
+        |h::t-> 
+            let newCurrInd=currInd+1
+            let newnewlist1 = newList1@[h]
+            let newnewlist2 = [h]@newList2
+            let newnewlist3 = newList3@[h]
+            if (cond newCurrInd minInd maxInd) then solve1 t cond cond2 newCurrInd newList1 newnewlist2 newList3 minInd maxInd
+            elif (cond2 newCurrInd maxInd) then solve1 t cond cond2 newCurrInd newnewlist1 newList2 newList3 minInd maxInd
+            else solve1 t cond cond2 newCurrInd newList1 newList2 newnewlist3 minInd maxInd
+    solve1 list (fun x y z-> x>y && x<z) (fun x y-> x<y) -1 [] [] [] (indexMin list) (indexMax list)
+            
+
+[<EntryPoint>]
+let main argv =
+    Console.WriteLine("Введите количество эелемнтов списка ")
+    let list = Convert.ToInt32(Console.ReadLine()) |> readList
+    Console.WriteLine("Минимальный: ")
+    printfn "%i" (listMin list)
+    Console.WriteLine("Индекс Минимального: ")
+    printfn "%i" (indexMin list)
+    Console.WriteLine("Максимальный: ")
+    printfn "%i" (listMax list)
+    Console.WriteLine("Индекс Максимального: ")
+    printfn "%i" (indexMax list)
+    Console.WriteLine("Между ними: ")
+    solve list|>writeList|>ignore
+    0
+    *)
