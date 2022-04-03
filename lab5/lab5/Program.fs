@@ -344,7 +344,7 @@ let main argv =
     0
     *)
 
-//18.3
+//18.3 19.3
 (*
 let sumCifr n = 
   let rec sumCifr1 n cond currSum = 
