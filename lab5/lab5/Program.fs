@@ -230,3 +230,37 @@ let num2 = 8
 (1*3*5*7 = obhodVzaimProst num2 (fun x y -> x*y) 1 (fun x -> x%2 = 1)) |> printfn "%b"
 0
 *)
+(*18.
+
+ 1.Количество чётных чисел не взаимно простых с данным*)
+ (*
+let rec nod a b =
+ if(a>0 && b>0)
+ then 
+     if(a>b)
+     then nod (a%b) b
+     else nod a (b%a)
+ else if(a=0)
+     then b else a
+
+let obhod num =
+ let rec obhod_In num p acc currNum =
+     let newNum = currNum-1
+     let newAcc=acc+1
+     if currNum=0 then acc
+     else 
+         if ((nod num newNum)<>1 && p newNum) then obhod_In num p newAcc newNum
+         else obhod_In num p acc newNum
+ obhod_In num (fun x -> if(x%2=0) then true else false) 0 num
+ *)
+
+(*
+[<EntryPoint>]
+let main argv =
+ let num = 10
+ obhod num |> printfn "%i"
+ let num = 11
+ obhod num |> printfn "%i"
+ 0
+
+*)
