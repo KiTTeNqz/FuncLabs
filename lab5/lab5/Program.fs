@@ -343,3 +343,59 @@ let main argv =
     f7 n|>printfn "%i"
     0
     *)
+
+(*18.3
+
+let sumCifr n = 
+  let rec sumCifr1 n cond currSum = 
+      if n = 0 then currSum
+      else
+          let n1 = n / 10
+          let cifr = n % 10
+          let newSum = currSum + cifr
+          if cond cifr then
+              sumCifr1 n1 cond newSum
+          else sumCifr1 n1 cond currSum
+  sumCifr1 n (fun x-> x<5) 0
+
+let rec nod a b =
+  if(a>0 && b>0)
+  then 
+      if(a>b)
+      then nod (a%b) b
+      else nod a (b%a)
+  else if(a=0)
+      then b else a
+
+let checkVzaimProst x y =
+  if (nod x y) = 1 then true else false
+
+let naimDelNe1 n =
+  let rec naimDelNe1_In n min currN =
+      if currN = n then min
+      else
+          let newN=currN+1
+          if newN=1 then naimDelNe1_In n min newN
+          else if(min>newN && n%newN=0) then naimDelNe1_In n newN newN
+          else naimDelNe1_In n min newN
+  naimDelNe1_In n Int32.MaxValue 0   
+
+let obhod3 n =
+  let rec obhod3_In n p max currN =
+      if currN=n-1 then max
+      else 
+          let newN=currN+1 
+          if currN=1 then obhod3_In n p max newN
+          else if(not(checkVzaimProst n newN) && (newN%(naimDelNe1 n)<>0) && p newN max) then obhod3_In n p newN newN
+          else obhod3_In n p max newN
+  obhod3_In n (fun x y-> if x>y then true else false) Int32.MinValue 0
+
+let proizved x y = x*y
+[<EntryPoint>]
+let main argv = 
+  let n=15
+  let solve=obhod3>>sumCifr
+  proizved (obhod3 n) (solve n)|>printfn "%i"
+  Console.ReadKey()
+  0 // возвращение целочисленного кода выхода
+  *)
