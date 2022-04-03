@@ -401,3 +401,30 @@ let main argv =
     Console.ReadKey()
     0 // возвращение целочисленного кода выхода
  *)
+
+(*20*)
+
+    (*
+
+let matchWithSolve = function
+    |1-> obhod
+    |2-> findCiph
+    |3-> otv
+
+let TheLastFuncCurring(ind, x) =
+    x|>(ind|>matchWithSolve)
+
+let TheLastFuncSuperpos(ind, x) =
+    let shell x = x
+    (matchWithSolve<<shell) ind x
+
+[<EntryPoint>]
+let main argv =
+    Console.WriteLine("Enter a number: ")
+    let n = Convert.ToInt32(Console.ReadLine())
+    Console.WriteLine("Enter a number of func: ")
+    let ind = Convert.ToInt32(Console.ReadLine())
+    let testFunc=TheLastFuncCurring(ind, n)=TheLastFuncSuperpos(ind, n)
+    testFunc|>printfn"%b"
+    0
+    *) 
