@@ -300,3 +300,24 @@ let num = 11
 obhodVzaimProst num |> printfn "%i"
 0
 *)
+
+(*//2.Найти максимальную цифру числа, не делящуюся на 3
+   
+   
+   let findCiph n =
+       let rec ciph1 n max p =
+           if n=0 then max
+           else
+               let ciph=n%10
+               let newN=n/10
+               if(ciph>max&& p ciph) then ciph1 newN ciph p
+               else ciph1 newN max p
+       ciph1 n Int32.MinValue (fun x->x%3<>0)
+   
+   [<EntryPoint>]
+   let main argv =
+       Console.WriteLine("Enter a number: ")
+       let n = Convert.ToInt32(Console.ReadLine())
+       findCiph n|>printfn "%i"
+       0
+       *)
