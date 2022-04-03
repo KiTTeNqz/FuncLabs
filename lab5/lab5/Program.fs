@@ -181,3 +181,52 @@ let main argv =
    0
 
 *)
+
+(* 17.
+let rec nod a b =
+if(a>0 && b>0)
+then 
+    if(a>b)
+    then nod (a%b) b
+    else nod a (b%a)
+else if(a=0)
+    then b else a
+    
+let max x y =
+if x>y then x else y
+    
+
+let obhodVzaimProst num f defZnach cond = 
+let rec obhodVzaimProstPodKapotom basicNum f defZnach currentNum cond =
+    let resNum = currentNum-1
+    if currentNum = 0 then defZnach
+    elif ((nod basicNum currentNum) = 1 && cond currentNum) 
+    then 
+        let defZn2 = (f defZnach currentNum)
+        obhodVzaimProstPodKapotom basicNum f defZn2 resNum cond
+    else obhodVzaimProstPodKapotom basicNum f defZnach resNum cond
+obhodVzaimProstPodKapotom num f defZnach num cond
+
+
+
+let obhodDelit num f defaultZnach cond = 
+let rec obhodDelitPodKapotom basicNum f defZn currentNum cond=
+    let resNum = currentNum-1
+    if currentNum = 0 then defZn
+    elif((basicNum%currentNum) = 0 && cond currentNum) 
+    then
+         let defZn2 = (f defZn currentNum) 
+         obhodDelitPodKapotom basicNum f defZn2 resNum cond
+    else obhodDelitPodKapotom basicNum f defZn resNum cond
+obhodDelitPodKapotom num f defaultZnach num cond
+
+[<EntryPoint>]
+let main argv =
+let num = 11
+(10 = obhodVzaimProst num (fun x y -> max x y) 0 (fun x -> x%2 = 0))  |> printfn "%b"
+(9 = obhodVzaimProst num (fun x y -> max x y) 1 (fun x -> x%2 = 1)) |> printfn "%b"
+let num2 = 8
+(0 = obhodVzaimProst num2 (fun x y -> x+y) 0 (fun x -> x%2 = 0))  |> printfn "%b"
+(1*3*5*7 = obhodVzaimProst num2 (fun x y -> x*y) 1 (fun x -> x%2 = 1)) |> printfn "%b"
+0
+*)
