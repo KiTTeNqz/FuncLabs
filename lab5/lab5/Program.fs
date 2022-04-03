@@ -104,4 +104,36 @@ let main argv =
     printfn "%i" (obhodDelit num (fun x y -> x+y)  0)
     0 
     *)
+
+(* 15.
+
+let rec nod a b =
+    if(a>0 && b>0)
+    then 
+        if(a>b)
+        then nod (a%b) b
+    else nod a (b%a)
+    else if(a=0)
+        then b else a
+        
     
+let obhodVzaimProst num f defZnach = 
+    let rec obhodVzaimProstPodKapotom basicNum f defZnach currentNum =
+        let resNum = currentNum-1
+        if currentNum = 0 then defZnach
+        elif ((nod basicNum currentNum) = 1) 
+        then 
+            let defZn2 = (f defZnach currentNum)
+            obhodVzaimProstPodKapotom basicNum f defZn2 resNum
+        else obhodVzaimProstPodKapotom basicNum f defZnach resNum
+    obhodVzaimProstPodKapotom num f defZnach num
+
+[<EntryPoint>]
+    let main argv =
+    Console.WriteLine("Введите число")
+    let num = Convert.ToInt32(Console.ReadLine())
+    Console.WriteLine("Сумма взаимнопростых делителей числа равна: ")
+    printfn "%i" (obhodVzaimProst num (fun x y -> x+y) 0)
+    0
+*)
+ 
