@@ -136,4 +136,48 @@ let obhodVzaimProst num f defZnach =
     printfn "%i" (obhodVzaimProst num (fun x y -> x+y) 0)
     0
 *)
- 
+
+(*   // 16.
+let rec nod a b =
+   if(a>0 && b>0)
+   then 
+       if(a>b)
+       then nod (a%b) b
+       else nod a (b%a)
+   else if(a=0)
+       then b else a
+       
+   
+let obhodVzaimProst num f kolvo = 
+   let rec obhodVzaimProstPodKapotom basicNum f kolvoForKapot currentNum =
+       let resNum = currentNum-1
+       if currentNum = 0 then kolvoForKapot
+       elif ((nod basicNum currentNum) = 1) 
+       then 
+           let newKolvo = (f kolvoForKapot currentNum)
+           obhodVzaimProstPodKapotom basicNum f newKolvo resNum
+       else obhodVzaimProstPodKapotom basicNum f kolvoForKapot resNum
+   obhodVzaimProstPodKapotom num f kolvo num
+
+let eulerFunc n =
+   obhodVzaimProst n (fun x y -> x+1) 0
+
+[<EntryPoint>]
+let main argv =
+   //Console.WriteLine("Введите число")
+   let num = 10
+  // Console.WriteLine("Введите второе число число")
+   let num2 = 11
+   Console.WriteLine("Количество взаимнопростых делителей первого числа равна: ")
+   eulerFunc num|>printfn "%i" 
+   Console.WriteLine("Количество взаимнопростых делителей второго числа равна: ")
+   eulerFunc num2|>printfn "%i" 
+   Console.WriteLine("Их НОД равен: ")
+   nod num num2|>printfn "%i"
+   Console.WriteLine("Тесты: ")
+   (4=eulerFunc num)|>printfn"%b"
+   (10=eulerFunc num2)|>printfn"%b"
+   (1=nod num num2)|>printfn"%b"
+   0
+
+*)
