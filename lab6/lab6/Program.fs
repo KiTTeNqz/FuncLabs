@@ -253,3 +253,25 @@ let main argv =
     0
 
 *)
+
+(*//40. Минимальный чётный
+
+let rec accCond2 list (f : int -> int -> int) p acc = 
+    match list with
+    | [] -> acc
+    | h::t ->
+                let newAcc = f acc h
+                if p h then accCond2 t f p newAcc
+                else accCond2 t f p acc
+
+let minDiv2 list =
+    accCond2 list (fun x y-> if x<y then x else y) (fun x-> x%2=0) Int32.MaxValue
+
+[<EntryPoint>]
+let main argv =
+    Console.WriteLine("Введите количество эелемнтов списка ")
+    let list = Convert.ToInt32(Console.ReadLine()) |> readList
+    Console.WriteLine("Минимальный чётный: ")
+    minDiv2 list|>printfn "%i"
+    0
+ *)
