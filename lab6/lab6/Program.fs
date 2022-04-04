@@ -227,3 +227,29 @@ let main argv =
     solve31 list|>printfn "%i" 
     0
     *)
+
+(*//34. Дан список и промежуток a b. Найти все x принадл. list и a<=x<=b
+
+let buildListCond list a b =
+    let rec buildRev currInd list between newList a b =
+        match list with
+        |[]->newList
+        |h::t-> 
+            let newInd=currInd+1
+            let newnewList=newList@[h]
+            if (between h a b) then buildRev newInd t between newnewList a b 
+            else buildRev newInd t between newList a b
+    buildRev -1 list (fun x y z-> x>=y && x<=z) [] a b 
+
+[<EntryPoint>]
+let main argv =
+    Console.WriteLine("Введите количество эелемнтов списка ")
+    let list = Convert.ToInt32(Console.ReadLine()) |> readList
+    Console.WriteLine("Введите промежуток a b: ")
+    let a = Convert.ToInt32(Console.ReadLine())
+    let b = Convert.ToInt32(Console.ReadLine())
+    Console.WriteLine("Подсписок: ")
+    buildListCond list a b|>writeList|>ignore
+    0
+
+*)
