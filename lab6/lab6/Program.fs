@@ -214,3 +214,16 @@ let main argv =
     max2 list|>printfn "%A" 
     0
 *)
+
+(*//31. Количество чётных элементов
+
+let solve31 list =
+    condCount list (fun x -> x%2=0) 0
+[<EntryPoint>]
+let main argv =
+    Console.WriteLine("Введите количество эелемнтов списка ")
+    let list = Convert.ToInt32(Console.ReadLine()) |> readList
+    Console.WriteLine("Чётных элементов: ")
+    solve31 list|>printfn "%i" 
+    0
+    *)
