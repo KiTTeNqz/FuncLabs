@@ -297,3 +297,72 @@ let main argv =
     buildListCond list|>writeList|>ignore
     0
  *)
+
+let eq basicList firstH =
+    let rec eq1 basicList firstH isEq =
+        match basicList with
+        |[] -> isEq
+        |h::t ->
+            if(h=firstH) then 
+                let newIsEq = true
+                eq1 t firstH newIsEq
+            else eq1 t firstH isEq
+    eq1 basicList firstH false
+
+let sum basicList list funcSum x listSum =
+    let rec sum1 basicList list funcSum x listSum count=
+        match list with
+        |[]->count
+        |h::t->
+                if eq basicList (funcSum x h) then
+                    if eq listSum (funcSum x h) then 
+                        sum1 basicList t funcSum x listSum count
+                    else
+                        let newCount=count+1
+                        let newList = listSum@[(funcSum x h)]
+                        sum1 basicList t funcSum x newList newCount
+                else sum1 basicList t funcSum x listSum count
+    sum1 basicList list funcSum x listSum 0
+
+let formListSum basicList list funcSum x=
+    let rec formListSum1 basicList list funcSum x listSum count=
+        match list with
+        |[]->listSum
+        |h::t->
+                if eq basicList (funcSum x h) then
+                    if eq listSum (funcSum x h) then 
+                        formListSum1 basicList t funcSum x listSum count
+                    else
+                        let newCount=count+1
+                        let newList = listSum@[(funcSum x h)]
+                        formListSum1 basicList t funcSum x newList newCount
+                else formListSum1 basicList t funcSum x listSum count
+    formListSum1 basicList list funcSum x [] 0
+
+let golovuSPlech list =
+    match list with
+    |[]->[]
+    |h::t-> t
+
+let solveFinal list =
+    let rec solve58 basicList list listSum count=
+        match list with
+        |[]->count
+        |h::t->
+            let firstH=h
+            let newList = golovuSPlech list
+            let newCount=count + (sum basicList newList (fun x y->x+y) firstH listSum)
+            let newListSum = formListSum basicList list (fun x y->x+y) firstH
+            solve58 basicList newList newListSum newCount
+    solve58 list list [] 0
+
+[<EntryPoint>]
+let main argv =
+    Console.WriteLine("Введите количество эелемнтов списка ")
+    let list = Convert.ToInt32(Console.ReadLine()) |> readList
+    Console.WriteLine("Количество: ")
+    solveFinal list|>printfn"%i"
+    0
+
+
+            
