@@ -194,3 +194,23 @@ let main argv =
     0
     *)
 
+(*//24. Найти два наибольших эелмента
+
+let max2 list =
+    let rec maxes list (max1,max2) =
+        match list with
+        |[]-> (max1,max2)
+        |h::t->
+            let newMax2=max1
+            if(h>max1) then maxes t (h, newMax2)
+            else maxes t (max1, max2)
+    maxes list (Int32.MinValue, Int32.MinValue)
+
+
+[<EntryPoint>]
+let main argv =
+    Console.WriteLine("Введите количество эелемнтов списка ")
+    let list = Convert.ToInt32(Console.ReadLine()) |> readList
+    max2 list|>printfn "%A" 
+    0
+*)
