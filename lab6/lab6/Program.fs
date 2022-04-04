@@ -275,3 +275,25 @@ let main argv =
     minDiv2 list|>printfn "%i"
     0
  *)
+
+ (*//46.Вывести сначала положительные, затем отрицательные элементы
+
+let buildListCond list =
+     let rec buildRev list p newListPos newListNeg =
+         match list with
+         |[]->newListPos@newListNeg
+         |h::t-> 
+             let newnewListPos=newListPos@[h]
+             let newnewListNeg=newListNeg@[h]
+             if (p h) then buildRev t p newnewListPos newListNeg 
+             else buildRev t p newListPos newnewListNeg
+     buildRev list (fun x-> x>0) [] [] 
+
+[<EntryPoint>]
+let main argv =
+    Console.WriteLine("Введите количество эелемнтов списка ")
+    let list = Convert.ToInt32(Console.ReadLine()) |> readList
+    Console.WriteLine("Новый список: ")
+    buildListCond list|>writeList|>ignore
+    0
+ *)
