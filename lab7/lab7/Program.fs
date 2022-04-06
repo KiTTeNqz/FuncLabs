@@ -15,7 +15,7 @@ let rec writeList = function
     | (head : int)::tail -> 
                        System.Console.WriteLine(head)
                        writeList tail
-
+(*//10.
 let rec solve list1 list2 count =
     match list1 with
     |[]->count
@@ -36,3 +36,25 @@ let main argv =
     shellSolve list1ForSolve list2ForSolve|>printfn"%i"
     0
     
+*)
+
+(*//20. Дан список. Найти пропущенные числа*)
+
+let buildListOfAllNums list =
+    let rec buildList1 currEl basicList currList max =
+        if(currEl>=max+1) then currList
+        else 
+            let newCurrEl=currEl+1
+            let newCurrList=currList@[newCurrEl]
+            buildList1 newCurrEl basicList newCurrList max
+    buildList1 (List.min list) list [] (List.max list)
+
+let allInOne list =
+    List.except list (buildListOfAllNums list)
+
+[<EntryPoint>]
+let main argv =
+    Console.WriteLine("Введите количество элементов списка ")
+    let list = Convert.ToInt32(Console.ReadLine()) |> readList
+    allInOne list|>writeList|>ignore
+    0
