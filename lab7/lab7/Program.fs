@@ -38,7 +38,7 @@ let main argv =
     
 *)
 
-(*//20. Дан список. Найти пропущенные числа*)
+(*//20. Дан список. Найти пропущенные числа
 
 let buildListOfAllNums list =
     let rec buildList1 currEl basicList currList max =
@@ -58,3 +58,35 @@ let main argv =
     let list = Convert.ToInt32(Console.ReadLine()) |> readList
     allInOne list|>writeList|>ignore
     0
+*)
+
+(*//30. Дан индекс. Определить, является ли он локальным максимумом
+
+let isLocalMax list index =
+    let currItem = List.item index list
+    let endOfList=(List.length list)-1
+    match index with
+    |0 ->
+        if currItem > List.item (index+1) list then true
+        else false
+    |endOfList -> 
+                if currItem > List.item (index-1) list then true
+                else false
+    |_ -> 
+        if currItem > List.item (index+1) list && currItem > List.item (index-1) list then true 
+        else false
+
+[<EntryPoint>]
+let main argv =
+    Console.WriteLine("Введите количество элементов списка ")
+    let list = Convert.ToInt32(Console.ReadLine()) |> readList
+    Console.WriteLine("Введите индекс: ")
+    let index = Convert.ToInt32(Console.ReadLine()) 
+    
+    if (isLocalMax list index) then Console.WriteLine("Ряльно лок.максимум")
+    else Console.WriteLine("Не лок.максимум")
+
+    0
+*)
+
+(*//50. *)
