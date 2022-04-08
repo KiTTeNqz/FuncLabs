@@ -89,4 +89,15 @@ let main argv =
     0
 *)
 
+(*//40. Минимальный чётный
+
+[<EntryPoint>]
+let main argv =
+    let n = Console.ReadLine() |> Int32.Parse
+    let list = readList n
+    let list = List.filter (fun x -> x%2 =0) list
+    List.min list|>printfn"%i"
+    0
+*)
+
 (*//50. *)
