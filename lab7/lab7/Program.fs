@@ -233,3 +233,70 @@ let main argv =
     printfn"%A"((list2, list3, list4))
     0
 *)
+
+(*
+let rec nod a b =
+    if(a%b = 0.0) then b
+    elif (b%a = 0.0) then a
+    elif ((abs a)>(abs b)) then nod (a%b) a
+    else nod a (b%a)
+
+let readarr n =
+    let rec readarr1 n arr =
+        match n with
+        |0 -> arr
+        |_ ->
+            let Head = Convert.ToDouble(Console.ReadLine())
+            let new_arr = Array.append arr [|Head|]
+            readarr1 (n-1) new_arr
+    readarr1 n Array.empty
+
+let writeArr arr =  
+    printfn "%A" arr
+
+let delInArr a =
+    let rec del1 a mod_a (newArr:double []) =
+        match mod_a with
+        |0.-> del1 a (mod_a+1.0) newArr
+        |x when x<=abs(a)-> 
+                    if(a%x=0.) then 
+                                    let newnewArr = Array.append newArr [|-mod_a|]
+                                    let newnewArr2 = Array.append newnewArr [|mod_a|]
+                                    del1 a (mod_a+1.0) newnewArr2
+                    else del1 a (mod_a+1.0) newArr
+        |x when x>abs(a)->newArr
+    del1 a 0. [||]
+
+
+let formDr arr a = Array.map (fun x-> (x/(nod x a))/(a/(nod x a))) arr 
+//НАПИСАТЬ НОД ДЛЯ ПРОВЕРКИ НЕСОКРАТИМЫХ ДРОБЕЙ
+let formArrPossibleRoots arr1 arr2 =
+    let rec del1 (arr1:double []) (arr2:double []) n (arrOfRoots:double []) =
+        if n <> Array.length arr2 then 
+                                    let new_itog = Array.append arrOfRoots (formDr arr1 arr2.[n])
+                                    del1 arr1 arr2 (n+1) new_itog
+        else arrOfRoots
+    del1 arr1 arr2 0 [||]
+
+let checkRoot arr root=
+    let rec isRoot (arr:float array) root acc deg =
+        match deg with
+        |(-1)->acc
+        |_->
+            let newAcc=acc+arr.[deg]*(pown root deg)
+            let newDeg = deg-1
+            isRoot arr root newAcc newDeg
+    isRoot arr root 0. ((Array.length arr)-1)
+        
+[<EntryPoint>]
+let main argv =
+    let n =Convert.ToInt32(Console.ReadLine())
+    let arr = readarr (n+1)
+    let p = delInArr (arr.[n])
+    let q = delInArr (arr.[0])
+    let q2=Array.filter (fun x-> x>0.) q
+    let possibleRoots = formArrPossibleRoots q2 p
+    let roots = Array.filter (fun x-> abs((checkRoot arr x))<0.001) possibleRoots
+    writeArr roots
+    0
+*)
