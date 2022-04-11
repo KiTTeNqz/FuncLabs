@@ -93,11 +93,47 @@ let main argv =
 
 [<EntryPoint>]
 let main argv =
-    let n = Console.ReadLine() |> Int32.Parse
-    let list = readList n
+    Console.WriteLine("Введите количество элементов списка ")
+    let list = Convert.ToInt32(Console.ReadLine()) |> readList
     let list = List.filter (fun x -> x%2 =0) list
     List.min list|>printfn"%i"
     0
 *)
 
 (*//50. *)
+let delEL list el = List.filter (fun x -> (x <> el)) list
+
+let uniq list = 
+    let rec uniq1 list newList = 
+        match list with
+            |[] -> newList
+            |h::t -> 
+                        let listWithout = delEL t h
+                        let newnewList = List.append newList [h]
+                        uniq1 listWithout newnewList
+    uniq1 list [] 
+
+let listsXOR list1 list2 newList =
+    let rec xor list1 list2 newList =
+        match list1 with
+        |[]->newList
+        |h::t->
+                if(not(List.exists (fun x -> x = h ) list2)) then
+                                                            let newnewlist = newList@[h]
+                                                            xor t list2 newnewlist
+                else xor t list2 newList
+    xor list1 list2 newList
+
+
+
+[<EntryPoint>]
+let main argv =
+    Console.WriteLine("Введите количество элементов списка1 ")
+    let list1 = Convert.ToInt32(Console.ReadLine()) |> readList
+    Console.WriteLine("Введите количество элементов списка2 ")
+    let list2 = Convert.ToInt32(Console.ReadLine()) |> readList
+    let uniqList1 = uniq list1
+    let uniqList2 = uniq list2
+    let newList = listsXOR uniqList1 uniqList2 []
+    listsXOR uniqList2 uniqList1 newList|>writeList|>ignore
+    0     
