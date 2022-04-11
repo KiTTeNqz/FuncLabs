@@ -100,19 +100,7 @@ let main argv =
     0
 *)
 
-(*//50. *)
-let delEL list el = List.filter (fun x -> (x <> el)) list
-
-let uniq list = 
-    let rec uniq1 list newList = 
-        match list with
-            |[] -> newList
-            |h::t -> 
-                        let listWithout = delEL t h
-                        let newnewList = List.append newList [h]
-                        uniq1 listWithout newnewList
-    uniq1 list [] 
-
+(*//50. 
 let listsXOR list1 list2 newList =
     let rec xor list1 list2 newList =
         match list1 with
@@ -132,8 +120,30 @@ let main argv =
     let list1 = Convert.ToInt32(Console.ReadLine()) |> readList
     Console.WriteLine("Введите количество элементов списка2 ")
     let list2 = Convert.ToInt32(Console.ReadLine()) |> readList
-    let uniqList1 = uniq list1
-    let uniqList2 = uniq list2
+    let uniqList1, keys = List.unzip(List.countBy id list1)
+    let uniqList2, keys = List.unzip(List.countBy id list2)
     let newList = listsXOR uniqList1 uniqList2 []
     listsXOR uniqList2 uniqList1 newList|>writeList|>ignore
-    0     
+    0  
+*)
+
+(*//60.Найти уникальные элементы, проверить делятся ли они на свои номера, и если делятся запихнуть в новый список
+
+let rec divByIndexAndOccur1time list (indexList:int list) (occurList:int list) (newList:int list) =
+    match list with
+    |[]->newList
+    |h::t->
+        if(occurList.Head = 1 && not(indexList.Head=0) && h%indexList.Head = 0) then
+                                                        let newnewList =List.append newList [h]
+                                                        divByIndexAndOccur1time t indexList.Tail occurList.Tail newnewList
+        else divByIndexAndOccur1time t indexList.Tail occurList.Tail newList
+
+[<EntryPoint>]
+let main argv =
+    Console.WriteLine("Введите количество элементов списка ")
+    let list = Convert.ToInt32(Console.ReadLine()) |> readList
+    let list1, keys = List.unzip(List.countBy id list)
+    let index, list2 = List.unzip(List.indexed list1)
+    divByIndexAndOccur1time list2 index keys []|>writeList|>ignore 
+    0  
+*)
