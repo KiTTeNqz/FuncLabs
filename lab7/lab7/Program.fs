@@ -147,3 +147,89 @@ let main argv =
     divByIndexAndOccur1time list2 index keys []|>writeList|>ignore 
     0  
 *)
+
+(*//17.Вывести 3 списка:
+    1. Номера элементов, которые могут получены как произведение двух любых элементов списка
+    2. Номера элементов, которые могут получены как сумма любых других элементов списка.
+    3. Номера элементов, которые делятся на 4 элемента из списка
+
+
+let listExceptIndex index list =
+    let rec except1 index list newList index2 =
+        match list with
+        |[]->newList
+        |h::t->
+                let newIndex=index2+1
+                let newnewList = newList@[h]
+                if newIndex=index then 
+                                        except1 index t newList newIndex
+                else except1 index t newnewList newIndex
+    except1 index list [] -1
+
+
+let listDelCount4 list indexes =
+    let rec delCount basicList list newListIndexes (indexes:int list) =
+        match list with
+        |[]->newListIndexes
+        |h::t->
+                    if (List.length (List.filter (fun x->(x<>0)&&(h%x=0)) (listExceptIndex indexes.Head basicList))) = 4 then 
+                                                                                                   delCount basicList t (List.append newListIndexes [indexes.Head]) indexes.Tail
+                    else delCount basicList t newListIndexes indexes.Tail  
+    delCount list list [] indexes
+
+let buildMultList list indexes =
+    let rec mult1 basicList list newList (indexes:int list) =
+        match list with
+        |[]->newList
+        |h::t-> 
+                    let newnewList=newList@List.map (fun x-> x*h) (listExceptIndex indexes.Head basicList)
+                    mult1 basicList t newnewList indexes.Tail
+    mult1 list list [] indexes
+
+let buildMultCond list indexes =
+    let rec build1 basicList list newListIndexes (indexes:int list) multList =
+        match list with
+        |[]->newListIndexes
+        |h::t->
+            if(List.exists (fun x->x=h) multList) then
+                                                    build1 basicList t (List.append newListIndexes [indexes.Head]) indexes.Tail multList
+            else build1 basicList t newListIndexes indexes.Tail multList
+    build1 list list [] indexes (buildMultList list indexes)
+
+let buildSumList list =
+    let rec mult1 basicList list newList =
+        match list with
+        |[]->newList
+        |h::t -> 
+            if(not(h=List.last basicList)) then
+                let itemForTrippleSum = List.item((List.findIndex(fun x->x=h) basicList)+1) basicList
+                let listForConcat = List.map(fun x-> x+h+itemForTrippleSum) (List.except [h] (List.except [itemForTrippleSum] basicList))
+                let newnewList = newList@(List.filter(fun x-> not(List.contains x newList)) listForConcat)
+                mult1 basicList t newnewList
+            else mult1 basicList t newList
+    mult1 list list [] 
+                
+
+let buildSumCond list indexes =
+    let rec build1 basicList list newListIndexes (indexes:int list) sumList =
+        match list with
+        |[]->newListIndexes
+        |h::t->
+            if(List.exists (fun x->x=h) sumList) then
+                                            build1 basicList t (List.append newListIndexes [indexes.Head]) indexes.Tail sumList
+            else build1 basicList t newListIndexes indexes.Tail sumList
+    build1 list list [] indexes (buildSumList list)
+
+
+[<EntryPoint>]
+let main argv =
+    Console.WriteLine("Введите количество элементов списка ")
+    let list = Convert.ToInt32(Console.ReadLine()) |> readList
+    let index, list1 = List.unzip(List.indexed list)
+    let multCond = buildMultCond list index
+    let sumCond = buildSumCond list index
+    let delCond = listDelCount4 list index
+    let (list2, list3, list4) = (multCond, sumCond, delCond)
+    printfn"%A"((list2, list3, list4))
+    0
+*)
