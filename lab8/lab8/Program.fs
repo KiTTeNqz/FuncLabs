@@ -2,6 +2,7 @@
 
 open System
 open System.Text.RegularExpressions
+open System.Diagnostics
 
 //5
 type Passport(firstname:string,
@@ -100,7 +101,7 @@ type BT(tree:BTN<Passport>)=
     
     override this.searchDoc doc =
         BT.exists doc this.t
-      
+(*      
 //randomizer
 let alphabet = "abcdefghijklmnopqrstuvwxyz"
 
@@ -122,21 +123,40 @@ let genRan (random: Random)=
     
     Passport(name, sname, pat, bd, gend, ser, num)
 
-let genRanList len random = 
-    [for i in 0..len -> genRan random]
+*)
 
-    
+let Time (watch:Stopwatch) searchMethod lic =
+    watch.Reset()
+    let stpwatch = new Stopwatch()
+    stpwatch.Start()
+    let startTime = stpwatch.ElapsedTicks
+    let isFound = searchMethod lic
+    let endTime = stpwatch.ElapsedTicks
+    stpwatch.Stop()
+    printfn "%A" (startTime, endTime, endTime - startTime)
 
 [<EntryPoint>]
 let main argv =
-    //5 6 7
-    let person1 = Passport("Mokshin", "Roman", "Ivanovich", DateTime.Parse("01.01.2002"), "Male", 1001, 123456)
-    let person2 = Passport("Lukashev", "Alexey", "Andreevich", DateTime.Parse("01.03.2004"),"Female", 1002, 456789)
-    let person3 = Passport("Dmitrov", "Dimas", "Dmitrievich", DateTime.Parse("01.03.2004"),"Male", 1004, 879254)
-    person1.ToString()|>printfn"%A"
-    person2.ToString()|>printfn"%A"
-    person1.Equals person2|>printfn"%b"
+    //5 6 7 8 9 10
+    let Person1 = Passport("Mokshin", "Roman", "Ivanovich", DateTime.Parse("01.01.2002"), "Male", 1001, 123456)
+    let Person2 = Passport("Lukashev", "Alexey", "Andreevich", DateTime.Parse("01.03.2004"),"Female", 1002, 456789)
+    let Person3 = Passport("Dmitrov", "Dimas", "Dmitrievich", DateTime.Parse("01.03.2004"),"Male", 1004, 879254)
+    Person1.ToString()|>printfn"%A"
+    Person2.ToString()|>printfn"%A"
+    Person1.Equals Person2|>printfn"%b"
+    Console.WriteLine()
 
+    let arr = ArrayDoc([|Person1; Person2; Person3|])
+    let list = ListDoc([Person1; Person2; Person3])
+    let tree : BTN<Passport> = (Node)(Person1, (Node)(Person2, Empty, Empty), Empty)
+    let bt = BT(tree)
+    let set = SetDoc(Set [Person1; Person2; Person3])
 
+    let neededTime = new Stopwatch()
+    Time neededTime arr.searchDoc Person1
+    Time neededTime list.searchDoc Person1
+    Time neededTime bt.searchDoc Person1
+    Time neededTime set.searchDoc Person1
 
     0
+ 
