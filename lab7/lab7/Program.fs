@@ -319,7 +319,7 @@ let main argv =
     |_->Console.WriteLine("Столько я не сделаю")
     0
 *)
-//20.1
+(*//20
 let stringFold func (str:string) acc =
     let rec fold1 index acc =
         match index with
@@ -327,6 +327,16 @@ let stringFold func (str:string) acc =
         |_->
             let newState = func acc (str.Chars index)
             let newInd=index+1
+            fold1 newInd newState
+    fold1 0 acc
+
+let stringFold2 func (str:string) acc =
+    let rec fold1 index acc =
+        match index with
+        |theLast when theLast>=(str.Length-2)->acc
+        |_->
+            let newState = func acc str.[index] str.[index+2]
+            let newInd=index+3
             fold1 newInd newState
     fold1 0 acc
 
@@ -345,10 +355,18 @@ let countConsonant (string:string) =Convert.ToDouble(string.Length)-(countVowel 
 
 let ratio str = ((countConsonant str)/Convert.ToDouble(String.length str)) - (countVowel str/Convert.ToDouble(String.length str)) 
 
+let trippleCount str = stringFold2 (fun x y z-> if y=z then (x+1) else x) str 0
+let ratio2 str =  (Convert.ToDouble(trippleCount str))/(Convert.ToDouble(String.length str))
+
 [<EntryPoint>]
 let main argv =
     Console.WriteLine("Введите строку ")
     let str1 = Console.ReadLine()
-    List.sortBy (fun x-> ratio x) (Array.toList(str1.Split " "))|>printfn"%A"
+    Console.WriteLine("Выберите метод от 1 до 2")
+    let a = Convert.ToInt32(Console.ReadLine())
+    match a with
+    |1->List.sortBy (fun x-> ratio x) (Array.toList(str1.Split " "))|>printfn"%A"
+    |2->List.sortBy (fun x-> ratio2 x) (Array.toList(str1.Split " "))|>printfn"%A"
+    |_->Console.WriteLine("Столько я не сделаю")
     0
-                                  
+*)
