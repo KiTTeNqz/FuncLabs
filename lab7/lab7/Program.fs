@@ -319,7 +319,7 @@ let main argv =
     |_->Console.WriteLine("Столько я не сделаю")
     0
 *)
-(*//20.1
+//20.1
 let stringFold func (str:string) acc =
     let rec fold1 index acc =
         match index with
@@ -327,16 +327,6 @@ let stringFold func (str:string) acc =
         |_->
             let newState = func acc (str.Chars index)
             let newInd=index+1
-            fold1 newInd newState
-    fold1 0 acc
-
-let stringFoldDoubleAcc func (str:string) acc =
-    let rec fold1 index acc =
-        match index with
-        |theLast when theLast=str.Length->acc
-        |_->
-            let newState = func acc (str.Chars index)
-            let newInd=index
             fold1 newInd newState
     fold1 0 acc
 
@@ -350,10 +340,10 @@ let isVowel letter =
     |'y'|'Y'->true
     |_->false
 
-let countVowel string = stringFold (fun x y-> if (isVowel y) then (x+1) else x) string 0
-let countConsonant (string:string) =string.Length-(countVowel string)
+let countVowel string = stringFold (fun x y-> if (isVowel y) then (x+1.0) else x) string 0.
+let countConsonant (string:string) =Convert.ToDouble(string.Length)-(countVowel string)
 
-let ratio str = ((countConsonant str)/String.length str) - (countVowel str/String.length str) 
+let ratio str = ((countConsonant str)/Convert.ToDouble(String.length str)) - (countVowel str/Convert.ToDouble(String.length str)) 
 
 [<EntryPoint>]
 let main argv =
@@ -361,4 +351,4 @@ let main argv =
     let str1 = Console.ReadLine()
     List.sortBy (fun x-> ratio x) (Array.toList(str1.Split " "))|>printfn"%A"
     0
- *)                                  
+                                  
