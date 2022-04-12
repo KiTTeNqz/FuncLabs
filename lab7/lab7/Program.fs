@@ -300,3 +300,22 @@ let main argv =
     writeArr roots
     0
 *)
+
+
+(*//19.
+[<EntryPoint>]
+let main argv =
+    Console.WriteLine("Введите строку ")
+    let str1 = Console.ReadLine()
+    Console.WriteLine("Выберите метод от 1 до 3")
+    let a = Convert.ToInt32(Console.ReadLine())
+    match a with
+    |1->
+        let str = str1|>String.map Char.ToUpper 
+        let stringRev = List.rev(Seq.toList str)
+        List.ofSeq str = stringRev|>printfn"%b"
+    |2->Array.length(str1.Split " ")|>printfn"%i"
+    |3->List.length(List.distinct(Seq.toList str1))|>printfn"%A"
+    |_->Console.WriteLine("Столько я не сделаю")
+    0
+*)
