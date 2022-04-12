@@ -4,15 +4,27 @@ open System
 open System.Text.RegularExpressions
 
 //5
-type Passport(
-    firstname:string,
+type Passport(firstname:string,
     surname:string,
     patronymic:string,
     birtday:DateTime,
     gender:string,
     pasport_series:int,
     pasport_number:int
-    ) = class
+    ) = 
+    //8. Хотя по факту, рег выражениями является конструкция match
+    let namesPattern = @"^[a-zA-Z]+$"
+    let genderPattern = @"Male|Female$"
+    let serPattern = @"^[0-9]{4}$"
+    let numPattern = @"^[0-9]{6}$"
+    do if not(Regex(namesPattern).IsMatch(firstname))then raise <| new System.ArgumentException("Неправильно введено имя")
+       elif not(Regex(namesPattern).IsMatch(surname))then raise <| new System.ArgumentException("Неправильно введена фамилия")
+       elif not(Regex(namesPattern).IsMatch(patronymic))then raise <| new System.ArgumentException("Неправильно введено отчество")
+       elif not(Regex(genderPattern).IsMatch(gender)) then raise <| new System.ArgumentException("Гендера только 2.")
+       elif not(Regex(serPattern).IsMatch(pasport_series.ToString())) then raise <| new System.ArgumentException("Неправильная серия")
+       elif not(Regex(numPattern).IsMatch(pasport_number.ToString())) then raise <| new System.ArgumentException("Неправильный номер")
+       else ()
+
     member this.name = firstname
     member this.surname = surname
     member this.patr = patronymic
@@ -21,6 +33,7 @@ type Passport(
     member this.ser = pasport_series
     member this.num = pasport_number
 
+    //7
     interface IEquatable<Passport> with
         member this.Equals other = other.id.Equals this.id
     interface IComparable with
@@ -37,20 +50,93 @@ type Passport(
     override this.GetHashCode () = this.id.GetHashCode()
 
 
-
+    //6
     override this.ToString()=
-            $"Name:\t\t {this.name} \n Surname:\t {this.surname} \n Patronymic:\t {this.patr} \n Date of Birth:\t {this.birtday} \n Gender:\t {this.g} \n Serial:\t {this.ser} \n Number:\t {this.num} " 
+            $"Name:\t\t {this.name} \n Surname:\t {this.surname} \n Patronymic:\t {this.patr} \n Date of Birth:\t {this.birtday} \n Gender:\t {this.g} \n Serial:\t {this.ser} \n Number:\t {this.num}\n\n " 
 
     member this.id = 0
-    end
+    
+[<AbstractClass>]
+type AbstractDoc() =
+    abstract member searchDoc:Passport->bool
+
+type ArrayDoc(arr: Passport []) =
+    inherit AbstractDoc()
+    member this.arr = arr
+
+    override this.searchDoc doc =
+        Array.exists(fun x-> x.Equals doc) this.arr
+
+type ListDoc(list: Passport list) =
+    inherit AbstractDoc()
+    member this.list = list
+
+    override this.searchDoc doc =
+        List.exists(fun x-> x.Equals doc) this.list
+
+type SetDoc(set: Passport Set) =
+    inherit AbstractDoc()
+    member this.set = set
+
+    override this.searchDoc doc =
+        Set.contains doc this.set
+
+type BTN<'T> =
+    | Empty
+    | Node of 'T*BTN<'T>*BTN<'T>
+
+type BT(tree:BTN<Passport>)=
+    inherit AbstractDoc()
+    member this.t = tree
+    
+    static member exists doc tree =
+        let rec search tree =
+            match tree with
+            | Node (head, left, right) when head = doc->true
+            | Node (head, left, right) when head<doc -> search right
+            | Node (head, left, right) when head>doc -> search left
+            | Empty -> false
+        search tree
+    
+    override this.searchDoc doc =
+        BT.exists doc this.t
+      
+//randomizer
+let alphabet = "abcdefghijklmnopqrstuvwxyz"
+
+let gendersRand = ["Male"; "Female"]
+
+let randomStr len (random:Random) = 
+    let randomChars = [|for i in 0..len -> alphabet.[random.Next(alphabet.Length)]|]
+    
+    new System.String(randomChars)
+
+let genRan (random: Random)=
+    let name = randomStr 10 random
+    let sname = randomStr 15 random
+    let pat = randomStr 20 random
+    let bd = DateTime.Parse("01.03.2123")
+    let gend = "Male"//List.item (random.Next( gendersRand.Length ) gendersRand
+    let ser = random.Next (1000, 9999)
+    let num = random.Next (100000, 999999)
+    
+    Passport(name, sname, pat, bd, gend, ser, num)
+
+let genRanList len random = 
+    [for i in 0..len -> genRan random]
 
     
 
 [<EntryPoint>]
 let main argv =
-    let person1 = Passport("Mokshin", "Roman", "Ivanovich", DateTime.Parse("01.01.2002"), "Male", 0001, 123456)
-    let person2 = Passport("Lukashev", "Alexey", "Andreevich", DateTime.Parse("01.03.2004"),"Male", 0002, 456789)
+    //5 6 7
+    let person1 = Passport("Mokshin", "Roman", "Ivanovich", DateTime.Parse("01.01.2002"), "Male", 1001, 123456)
+    let person2 = Passport("Lukashev", "Alexey", "Andreevich", DateTime.Parse("01.03.2004"),"Female", 1002, 456789)
+    let person3 = Passport("Dmitrov", "Dimas", "Dmitrievich", DateTime.Parse("01.03.2004"),"Male", 1004, 879254)
     person1.ToString()|>printfn"%A"
     person2.ToString()|>printfn"%A"
     person1.Equals person2|>printfn"%b"
+
+
+
     0
