@@ -319,3 +319,46 @@ let main argv =
     |_->Console.WriteLine("Столько я не сделаю")
     0
 *)
+(*//20.1
+let stringFold func (str:string) acc =
+    let rec fold1 index acc =
+        match index with
+        |theLast when theLast=str.Length->acc
+        |_->
+            let newState = func acc (str.Chars index)
+            let newInd=index+1
+            fold1 newInd newState
+    fold1 0 acc
+
+let stringFoldDoubleAcc func (str:string) acc =
+    let rec fold1 index acc =
+        match index with
+        |theLast when theLast=str.Length->acc
+        |_->
+            let newState = func acc (str.Chars index)
+            let newInd=index
+            fold1 newInd newState
+    fold1 0 acc
+
+let isVowel letter =
+    match letter with
+    |'a'|'A'->true
+    |'e'|'E'->true
+    |'i'|'I'->true
+    |'o'|'O'->true
+    |'u'|'U'->true
+    |'y'|'Y'->true
+    |_->false
+
+let countVowel string = stringFold (fun x y-> if (isVowel y) then (x+1) else x) string 0
+let countConsonant (string:string) =string.Length-(countVowel string)
+
+let ratio str = ((countConsonant str)/String.length str) - (countVowel str/String.length str) 
+
+[<EntryPoint>]
+let main argv =
+    Console.WriteLine("Введите строку ")
+    let str1 = Console.ReadLine()
+    List.sortBy (fun x-> ratio x) (Array.toList(str1.Split " "))|>printfn"%A"
+    0
+ *)                                  
