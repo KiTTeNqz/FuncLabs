@@ -21,24 +21,6 @@ let parseNum = float_ws |>> Num
 
 implementation := parseNum <|> parseOp
 
-(*
-let rec Execute expr =
-    maNumxpr with
-    | Value(a) -> a
-    | Plus(a,b) | Minus(a,b) ->
-        let left = 
-            maNum with
-            | Value(v) -> v
-            | Plus(_,_) | Minus(_,_) -> Execute a
-        let right = 
-            maNum with
-            | Value(v) -> v
-            | Plus(_,_) | Minus(_,_) -> Execute b
-        match expr with
-        | Plus(_,_) -> left + right
-        | Minus(_,_) -> left - right
-        | _ -> 0.
-*)
 let rec EvalExpr(e:Expr):float =
     match e with
     | Num(num) -> num
