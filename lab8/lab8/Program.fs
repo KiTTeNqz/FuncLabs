@@ -125,12 +125,12 @@ let genRan (random: Random)=
 
 *)
 
-let Time (watch:Stopwatch) searchMethod lic =
+let Time (watch:Stopwatch) searchMethod collection =
     watch.Reset()
     let stpwatch = new Stopwatch()
     stpwatch.Start()
     let startTime = stpwatch.ElapsedTicks
-    let isFound = searchMethod lic
+    let isFound = searchMethod collection
     let endTime = stpwatch.ElapsedTicks
     stpwatch.Stop()
     printfn "%A" (startTime, endTime, endTime - startTime)
